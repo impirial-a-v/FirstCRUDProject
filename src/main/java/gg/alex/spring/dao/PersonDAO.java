@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PersonDAO {
+public class PersonDAO      {
 
     private int PEOPLE_COUNT;
 
