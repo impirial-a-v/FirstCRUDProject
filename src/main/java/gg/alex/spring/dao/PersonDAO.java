@@ -1,6 +1,8 @@
 package gg.alex.spring.dao;
 
 import gg.alex.spring.models.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -10,6 +12,14 @@ import java.util.List;
 @Component
 public class PersonDAO      {
 
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public PersonDAO(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate= jdbcTemplate;
+    }
+//              подключение без использования Spring JDBC
+    /*  ---------------------------------------------------------------------------------
     private int PEOPLE_COUNT;
 
     private static final String URL = "jdbc:postgresql://localhost:5432/first_db";
@@ -31,9 +41,14 @@ public class PersonDAO      {
            e.printStackTrace();
         }
     }
-
+    ---------------------------------------------------------------------------------------------
+*/
 
     public List<Person> index(){
+return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
+
+//              подключение без использования Spring JDBC
+        /*---------------------------------------------------------------------------------------------
         List<Person> people = new ArrayList<>();
 
         try {
@@ -56,10 +71,16 @@ public class PersonDAO      {
             throw new RuntimeException(e);
         }
         return people;
+        ---------------------------------------------------------------------------------------------
+        */
     }
 
        public Person show(int id){
 
+        return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new Object[]{id}, new PersonMapper())
+                .stream().findAny().orElse(null);
+//              подключение без использования Spring JDBC
+/* ---------------------------------------------------------------------------------------------
         Person person = null;
            try {
                PreparedStatement preparedStatement =
@@ -83,10 +104,17 @@ public class PersonDAO      {
            }
 
            return person;
+ -------------------------------------------------------------------------------------------------------
+           */
        }
 
     public void save(Person person){
 
+       jdbcTemplate.update("INSERT INTO Person (pname, age, email) VALUES (?, ?, ?)", person.getName(),
+                person.getAge(), person.getEmail());
+
+        //              подключение без использования Spring JDBC
+/* ---------------------------------------------------------------------------------------------
         try {
 
             PreparedStatement preparedStatement =
@@ -97,22 +125,28 @@ public class PersonDAO      {
                 preparedStatement.setInt(2, person.getAge());
 
                 preparedStatement.executeUpdate();
-/*
-            Statement statement = connection.createStatement();
-            String SQL = "INSERT INTO Person VALUES(" + 1 + ",'"+ person.getName()+"',"+person.getAge()+",'"+person.getEmail()+"')" ;
-            statement.executeUpdate(SQL);
 
-*/
+//            Statement statement = connection.createStatement();
+//           String SQL = "INSERT INTO Person VALUES(" + 1 + ",'"+ person.getName()+"',"+person.getAge()+",'"+person.getEmail()+"')" ;
+//           statement.executeUpdate(SQL);
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-
+        -------------------------------------------------------------------------------------------------------
+                */
     }
 
     public void update(int id, Person updatePerson) {
 
+
+        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=? WHERE id=?",
+                updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), id);
+
+        //              подключение без использования Spring JDBC
+/* ---------------------------------------------------------------------------------------------
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("UPDATE Person SET  pname=?, age=?, email=? WHERE id=?");
@@ -128,11 +162,17 @@ public class PersonDAO      {
             throw new RuntimeException(e);
         }
 
-
+  -------------------------------------------------------------------------------------------------------
+                */
     }
 
     public void delete(int id) {
 
+        jdbcTemplate.update("DELETE FROM Person WHERE id=?", id);
+
+
+        //              подключение без использования Spring JDBC
+/* ---------------------------------------------------------------------------------------------
         try {
             PreparedStatement preparedStatement =
                     connection.prepareStatement("DELETE FROM Person WHERE id=?");
@@ -143,6 +183,7 @@ public class PersonDAO      {
             throw new RuntimeException(e);
         }
 
-
+  -------------------------------------------------------------------------------------------------------
+                */
     }
 }
