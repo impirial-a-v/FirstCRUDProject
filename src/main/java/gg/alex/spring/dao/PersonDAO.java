@@ -90,7 +90,7 @@ public class PersonDAO      {
         try {
 
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO Person VALUES (1, ?, ?, ?)");
+                    connection.prepareStatement("INSERT INTO Person (pname, age, email) VALUES (?, ?, ?)");
 
                 preparedStatement.setString(1, person.getName());
                 preparedStatement.setString(3, person.getEmail());
