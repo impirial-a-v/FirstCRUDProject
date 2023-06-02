@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/test-batch-update")
+@RequestMapping("/testbatch")
 public class BatchController {
 
     private final PersonDAO personDAO;
@@ -20,7 +20,7 @@ public class BatchController {
 
     @GetMapping()
     public String index(){
-         return "batch/batch";
+         return "batchFolder/batch";
 
     }
 
