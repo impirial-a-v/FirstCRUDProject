@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class Person {
-    private int id;
+    private int person_id;
     @NotEmpty(message = "Name not should be empty")
     @Size(min=2, max = 30, message="name should be between 2 and 30 characters")
     private String name;
@@ -16,8 +16,8 @@ public class Person {
 @Email(message = "E-mail should be valid")
     private String email;
 
-    public Person(int id, String name, int age, String email) {
-        this.id = id;
+    public Person(int person_id, String name, int age, String email) {
+        this.person_id = person_id;
         this.name = name;
         this.age = age;
         this.email = email;
@@ -41,12 +41,12 @@ public class Person {
 
     public Person(){}
 
-    public int getId() {
-        return id;
+    public int getPerson_id() {
+        return person_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
 
     public String getName() {

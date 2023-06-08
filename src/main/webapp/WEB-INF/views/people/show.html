@@ -8,11 +8,11 @@
 
 <p th:text="${person.getName() + ', ' + person.getAge()}">VALUE</p>
 <p th:text="${'Email: ' + person.getEmail()}">VALUE</p>
-<p th:text="${person.getId()}"/>
+<p th:text="${person.getPerson_id()}"/>
 
-<a th:href="@{/people/{id}/edit(id=${person.getId()})}"> edit </a>
+<a th:href="@{/people/{person_id}/edit(person_id=${person.getPerson_id()})}"> edit </a>
 
-<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+<form th:method="DELETE" th:action="@{/people/{person_id}(person_id=${person.getPerson_id()})}">
     <input type="sumbit" value="Delete"/>
 </form>
 

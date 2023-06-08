@@ -2,13 +2,16 @@ package gg.alex.spring.dao;
 
 import gg.alex.spring.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO      {
@@ -45,6 +48,13 @@ public class PersonDAO      {
     ---------------------------------------------------------------------------------------------
 */
 
+    public Optional<Person> show(String email){                                        // метод для валидации  email
+        return jdbcTemplate.query("SELECT * FROM Person WHERE email=?", new Object[] {email},
+                new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+    }
+
+
+
     public List<Person> index(){
 return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
 
@@ -76,9 +86,9 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
         */
     }
 
-       public Person show(int id){
+       public Person show(int person_id){
 
-        return jdbcTemplate.query("SELECT * FROM person WHERE id=?", new Object[]{id}, new PersonMapper())
+        return jdbcTemplate.query("SELECT * FROM person WHERE person_id=?", new Object[]{person_id}, new PersonMapper())
                 .stream().findAny().orElse(null);
 //              подключение без использования Spring JDBC
 /* ---------------------------------------------------------------------------------------------
@@ -140,11 +150,11 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
                 */
     }
 
-    public void update(int id, Person updatePerson) {
+    public void update(int person_id, Person updatePerson) {
 
 
-        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=? WHERE id=?",
-                updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), id);
+        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=? WHERE person_id=?",
+                updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), person_id);
 
         //              подключение без использования Spring JDBC
 /* ---------------------------------------------------------------------------------------------
@@ -167,17 +177,17 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
                 */
     }
 
-    public void delete(int id) {
+    public void delete(int person_id) {
 
-        jdbcTemplate.update("DELETE FROM Person WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM Person WHERE person_id=?", person_id);
 
 
         //              подключение без использования Spring JDBC
 /* ---------------------------------------------------------------------------------------------
         try {
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("DELETE FROM Person WHERE id=?");
-            preparedStatement.setInt(1, id);
+                    connection.prepareStatement("DELETE FROM Person WHERE person_id=?");
+            preparedStatement.setInt(1, person_id);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -204,6 +214,7 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
 
 
     }
+
 
 
 
