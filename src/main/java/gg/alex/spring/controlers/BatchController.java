@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/testbatch")
 public class BatchController {
-
+/*
     private final PersonDAO personDAO;
 
     @Autowired
@@ -34,5 +34,5 @@ public class BatchController {
     public String withBatch(){
         personDAO.testBatchUpdate();
         return "redirect:/people";
-    }
+    }*/
 }

@@ -121,8 +121,8 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
 
     public void save(Person person){
 
-       jdbcTemplate.update("INSERT INTO Person (pname, age, email) VALUES (?, ?, ?)", person.getName(),
-                person.getAge(), person.getEmail());
+       jdbcTemplate.update("INSERT INTO Person (pname, age, email, address) VALUES (?, ?, ?, ?)", person.getName(),
+                person.getAge(), person.getEmail(), person.getAddress());
 
         //              подключение без использования Spring JDBC
 /* ---------------------------------------------------------------------------------------------
@@ -153,8 +153,8 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
     public void update(int person_id, Person updatePerson) {
 
 
-        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=? WHERE person_id=?",
-                updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), person_id);
+        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=?, address=?, WHERE person_id=?",
+                updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), updatePerson.getAddress(), person_id);
 
         //              подключение без использования Spring JDBC
 /* ---------------------------------------------------------------------------------------------
@@ -198,6 +198,11 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
                 */
     }
 
+
+
+
+
+    /*
     public void testMultipleUpdate() {
 
         List<Person> people = create1000People();
@@ -257,5 +262,5 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
         }
     return people;
     }
-
+*/
 }
