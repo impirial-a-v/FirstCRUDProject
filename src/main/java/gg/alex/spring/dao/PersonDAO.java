@@ -153,7 +153,7 @@ return jdbcTemplate.query("SELECT * FROM person", new PersonMapper());
     public void update(int person_id, Person updatePerson) {
 
 
-        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=?, address=?, WHERE person_id=?",
+        jdbcTemplate.update("UPDATE Person SET  pname=?, age=?, email=?, address=? WHERE person_id=?",
                 updatePerson.getName(), updatePerson.getAge(), updatePerson.getEmail(), updatePerson.getAddress(), person_id);
 
         //              подключение без использования Spring JDBC
